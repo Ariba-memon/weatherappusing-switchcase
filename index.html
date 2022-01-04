@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    
+            <input type="text" id="inputBox"placeholder="Ente City name">
+        
+        
+            <h1 id="result"></h1>
+            
+            
+                <h1 id="result"></h1> 
+          
+
+            <button onclick="Temp()">Check the temprature</button>
+        </div>
+
+    </div>
+    <script>
+        function Temp(){
+
+let inputBox = document.getElementById("inputBox").value
+var result = document.getElementById("result");
+
+axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${inputBox}&appid=7c29fc42a4120643e129ed0883097dca&units=metric`)
+  .then(function (response) {
+
+    let weatherData = response.data
+    console.log("weatherData: ", weatherData);
+  
+
+  var temp =  Number(weatherData?.main?.temp);
+  var minTemp = Number(weatherData?.main?.temp_min);
+  var maxTemp = Number(weatherData?.main?.temp_max);
+
+  switch(true){
+
+  case (temp < -10) || (minTemp < -10):
+
+      result.innerHTML = "Donot go out its too cold";
+     
+      
+    break;
+   
+  
+   case (temp > 35 || maxTemp > 35):
+      
+        result.innerHTML = "Donot go outside its too hot";
+       
+
+        break;
+
+
+   case 
+      (temp >= -10 && temp <= 5 )||
+      (minTemp >= -10 && minTemp <= 5 ):
+      
+        result.innerHTML = "carry jacket and takecare"
+        
+
+        break;
+ 
+   case 
+      (temp > 5 && temp <= 20)||
+      (minTemp > 5 && minTemp <= 20):
+      
+        result.innerHTML = " carry jacket with you"
+        
+    break;
+   
+    case (temp > 20 && temp <= 35) :
+
+   
+        result.innerText = "Donot carry jacket do your work";
+        
+        
+        break;
+   }
+    
+
+
+     result.innerText += `- current temp is ${temp}'C`
+   
+    })
+
+   
+
+
+    .catch(function (error) {
+     console.log(error);
+})
+}
+    </script>
+</body>
+</html>
